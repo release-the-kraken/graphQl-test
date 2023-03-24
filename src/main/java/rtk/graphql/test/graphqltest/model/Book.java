@@ -1,15 +1,14 @@
 package rtk.graphql.test.graphqltest.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity(name = "books")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,5 +16,12 @@ public class Book {
     private String name;
     private int pageCount;
 
-    private long authorId;
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author author;
+
+    public Book(String name, int pageCount) {
+        this.name = name;
+        this.pageCount = pageCount;
+    }
 }
